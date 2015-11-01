@@ -14,7 +14,7 @@ import JSQMessagesViewController
 class ContactProfileViewController: UIViewController {
     
     @IBAction func startChattingButtonTapped(sender: UIButton) {
-        var newVC = JSQMessagesViewController()
+        let newVC: ChatViewController = ChatViewController()
         newVC.senderDisplayName = user?.email
         newVC.senderId = user?.objectId
         self.presentViewController(newVC, animated: true, completion: nil)

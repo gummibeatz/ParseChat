@@ -61,9 +61,9 @@ class BrowseContactTableViewController: UITableViewController {
     
     func myMethod() {
         var user = PFUser()
-        user.username = "myUsername3"
-        user.password = "myPassword3"
-        user.email = "email3@example.com"
+        user.username = "myUsername4"
+        user.password = "myPassword4"
+        user.email = "email4@example.com"
         user["isContact"] = true
         // other fields can be set just like with PFObject
         user["phone"] = "415-392-0202"
