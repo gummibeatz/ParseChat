@@ -1,36 +1,39 @@
 //
-//  BrowseContactTableViewController.swift
+//  ExistingMessageController.swift
 //  ParseChat
 //
-//  Created by Linus Liang on 10/31/15.
+//  Created by Linus Liang on 11/1/15.
 //  Copyright © 2015 Linus Liang. All rights reserved.
 //
 
-import UIKit
 import Foundation
+import UIKit
 import Parse
 
-class BrowseContactTableViewController: UITableViewController {
+class ExistingMessagesController: UITableViewController {
     
     var idx: Int?
-    var contacts: [PFUser] = []
+    var conversations: [PFObject] = []
     enum QueryErrors: ErrorType {
         case BadCast
     }
     
-
+    
     
     override func viewDidLoad() {
         
         signIn()
-        
-        var query = PFUser.query()
-        query?.whereKey("isContact", equalTo: true)
+        let user = PFUser.currentUser()
+        let relation = user?.relationForKey("chatRoom")
+        let query = relation?.query()
         do {
-            contacts = try query?.findObjects() as! [PFUser]
+            var results = try query?.findObjects()
+            print(results)
         } catch {
-            print("caught")
+            
         }
+        print(conversations)
+
     }
     
     
@@ -39,20 +42,20 @@ class BrowseContactTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
+        return conversations.count
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
-
+        
         let index: Int = self.tableView.indexPathForSelectedRow!.row
-        vc.contact = contacts[index]
+
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
         
-        cell.textLabel!.text = contacts[indexPath.row].email
+        cell.textLabel!.text = "test"//conversations[indexPath.row]
         return cell
     }
     
@@ -65,4 +68,5 @@ class BrowseContactTableViewController: UITableViewController {
         print("in sign in")
         print(PFUser.currentUser())
     }
+
 }

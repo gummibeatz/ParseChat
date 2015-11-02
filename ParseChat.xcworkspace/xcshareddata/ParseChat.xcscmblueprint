@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A4906ECB700B967C990CD98A72E1D585ACEE7D72",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "14651705FB81BD97AEE1DA5B1DECF6CAD54A5F22" : 0,
+    "A4906ECB700B967C990CD98A72E1D585ACEE7D72" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "24B565E7-F5DB-4188-A191-44E044A5D8FD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "14651705FB81BD97AEE1DA5B1DECF6CAD54A5F22" : "..",
+    "A4906ECB700B967C990CD98A72E1D585ACEE7D72" : "ParseChat\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ParseChat",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ParseChat.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gummibeatz\/hackesscode-2015.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "14651705FB81BD97AEE1DA5B1DECF6CAD54A5F22"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gummibeatz\/ParseChat.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A4906ECB700B967C990CD98A72E1D585ACEE7D72"
+    }
+  ]
+}

@@ -13,6 +13,7 @@
 		CC7B5D0D1BE5831700B63ED4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC7B5D0B1BE5831700B63ED4 /* Main.storyboard */; };
 		CC7B5D0F1BE5831700B63ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */; };
 		CC7B5D121BE5831700B63ED4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC7B5D101BE5831700B63ED4 /* LaunchScreen.storyboard */; };
+		CCA7E8551BE6AC1E005918F3 /* ExistingMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */; };
 		CCDBBC7C1BE58A5A0033D6DC /* BrowseContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */; };
 		CCDBBC7E1BE5942F0033D6DC /* ContactProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */; };
 		CCDBBC801BE5991D0033D6DC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */; };
@@ -29,6 +30,7 @@
 		CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC7B5D111BE5831700B63ED4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC7B5D131BE5831700B63ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingMessagesController.swift; sourceTree = "<group>"; };
 		CCDBBC7A1BE586130033D6DC /* ParseChat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParseChat-Bridging-Header.h"; sourceTree = "<group>"; };
 		CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseContactTableViewController.swift; sourceTree = "<group>"; };
 		CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactProfileViewController.swift; sourceTree = "<group>"; };
@@ -89,9 +91,10 @@
 				CC7B5D071BE5831700B63ED4 /* AppDelegate.swift */,
 				CC7B5D091BE5831700B63ED4 /* ViewController.swift */,
 				CC7B5D0B1BE5831700B63ED4 /* Main.storyboard */,
+				CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */,
+				CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */,
 				CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */,
 				CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */,
-				CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */,
 				CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */,
 				CC7B5D101BE5831700B63ED4 /* LaunchScreen.storyboard */,
 				CC7B5D131BE5831700B63ED4 /* Info.plist */,
@@ -229,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCA7E8551BE6AC1E005918F3 /* ExistingMessagesController.swift in Sources */,
 				CCDBBC801BE5991D0033D6DC /* ChatViewController.swift in Sources */,
 				CCDBBC7C1BE58A5A0033D6DC /* BrowseContactTableViewController.swift in Sources */,
 				CCDBBC7E1BE5942F0033D6DC /* ContactProfileViewController.swift in Sources */,

@@ -105,7 +105,7 @@
         <!--Item-->
         <scene sceneID="xUT-Zd-DKj">
             <objects>
-                <tableViewController id="FuS-G8-gj7" sceneMemberID="viewController">
+                <tableViewController id="FuS-G8-gj7" customClass="ExistingMessagesController" customModule="ParseChat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="BSf-QX-igO">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,7 +113,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="udb-af-4n8">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="udb-af-4n8" id="l0N-Tq-WFm">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -147,7 +147,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="UAA-iA-zAl" kind="relationship" relationship="viewControllers" id="gmw-oo-mu7"/>
-                        <segue destination="FuS-G8-gj7" kind="relationship" relationship="viewControllers" id="PQf-Ae-OnY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPv-gU-Ycs" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -26,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseChat/BrowseContactTableViewController.swift"
-            timestampString = "468031192.45182"
+            timestampString = "468100714.834378"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "BrowseContactTableViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ParseChat/BrowseContactTableViewController.swift"
+            timestampString = "468100714.834378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
             endingLineNumber = "41"
-            landmarkName = "numberOfSectionsInTableView(_:)"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,27 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseChat/BrowseContactTableViewController.swift"
-            timestampString = "468031192.45182"
+            timestampString = "468100714.834378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "numberOfSectionsInTableView(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ParseChat/BrowseContactTableViewController.swift"
-            timestampString = "468031192.45182"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,13 +90,147 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseChat/BrowseContactTableViewController.swift"
-            timestampString = "468031192.45182"
+            timestampString = "468100714.834378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ParseChat/ChatViewController.swift"
+            timestampString = "468124179.555979"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ParseChat/BrowseContactTableViewController.swift"
+            timestampString = "468088689.424181"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "BrowseContactTableViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ParseChat.BrowseContactTableViewController.idx.getter : Swift.Optional&lt;Swift.Int&gt;"
+                  moduleName = "ParseChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/linusliang/Projects/Xcode/ParseChat/ParseChat/BrowseContactTableViewController.swift"
+                  timestampString = "468088689.433033"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "8">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ParseChat.BrowseContactTableViewController.idx.setter : Swift.Optional&lt;Swift.Int&gt;"
+                  moduleName = "ParseChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/linusliang/Projects/Xcode/ParseChat/ParseChat/BrowseContactTableViewController.swift"
+                  timestampString = "468088689.433473"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ParseChat.BrowseContactTableViewController.idx.materializeForSet : Swift.Optional&lt;Swift.Int&gt;"
+                  moduleName = "ParseChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/linusliang/Projects/Xcode/ParseChat/ParseChat/BrowseContactTableViewController.swift"
+                  timestampString = "468088689.433772"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ParseChat.BrowseContactTableViewController.init (ParseChat.BrowseContactTableViewController.Type)(style : __C.UITableViewStyle) -&gt; ParseChat.BrowseContactTableViewController"
+                  moduleName = "ParseChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/linusliang/Projects/Xcode/ParseChat/ParseChat/BrowseContactTableViewController.swift"
+                  timestampString = "468088689.433952"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ParseChat.BrowseContactTableViewController.init (ParseChat.BrowseContactTableViewController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.NSBundle&gt;) -&gt; ParseChat.BrowseContactTableViewController"
+                  moduleName = "ParseChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/linusliang/Projects/Xcode/ParseChat/ParseChat/BrowseContactTableViewController.swift"
+                  timestampString = "468088689.43412"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ParseChat.BrowseContactTableViewController.init (ParseChat.BrowseContactTableViewController.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;ParseChat.BrowseContactTableViewController&gt;"
+                  moduleName = "ParseChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/linusliang/Projects/Xcode/ParseChat/ParseChat/BrowseContactTableViewController.swift"
+                  timestampString = "468088689.43428"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "99">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
