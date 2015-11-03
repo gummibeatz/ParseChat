@@ -92,27 +92,21 @@ class ChatViewController: JSQMessagesViewController {
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
-        
         let message = messages[indexPath.item]
         if message.senderId == senderId {
             cell.textView!.textColor = UIColor.blackColor()
         } else {
             cell.textView!.textColor = UIColor.whiteColor()
         }
-        
         let attributes : [String:AnyObject] = [NSForegroundColorAttributeName:cell.textView!.textColor!, NSUnderlineStyleAttributeName: 1]
-        cell.textView!.linkTextAttributes = attributes
         
-        //        cell.textView.linkTextAttributes = [NSForegroundColorAttributeName: cell.textView.textColor,
-        //            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle]
+        cell.textView!.linkTextAttributes = attributes
+        cell.textView!.linkTextAttributes = [NSForegroundColorAttributeName: cell.textView!.textColor!, NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
         return cell
     }
     
     func loadMessages() {
-        print("in loadmessages")
-        print(chatRoom!)
         let rawMessages = self.chatRoom?.objectForKey("messages") as! [PFObject]
-        print("rawMessages = \(rawMessages)")
         for message in rawMessages {
             var senderId = PFUser.currentUser()!.objectId
             var displayName = PFUser.currentUser()!.username
@@ -123,7 +117,6 @@ class ChatViewController: JSQMessagesViewController {
             }
             self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
         }
-        print("finished loading messages")
     }
     
 }

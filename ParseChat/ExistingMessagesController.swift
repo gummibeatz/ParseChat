@@ -27,7 +27,7 @@ class ExistingMessagesController: UITableViewController {
         let relation = user?.relationForKey("chatRoom")
         let query = relation?.query()
         do {
-            var results = try query?.findObjects()
+            let results = try query?.findObjects()
             print(results)
         } catch {
             
@@ -46,14 +46,11 @@ class ExistingMessagesController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
-        
-        let index: Int = self.tableView.indexPathForSelectedRow!.row
 
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
+        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
         
         cell.textLabel!.text = "test"//conversations[indexPath.row]
         return cell

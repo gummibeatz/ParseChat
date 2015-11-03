@@ -27,7 +27,7 @@ class userLoginController: UIViewController {
 extension userLoginController: UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let nextTag = textField.tag+1
-        let nextResponder = textField.superview?.viewWithTag(nextTag) as? UIResponder
+        let nextResponder = textField.superview?.viewWithTag(nextTag)
         if nextResponder != nil {
             nextResponder?.becomeFirstResponder()
         } else {
