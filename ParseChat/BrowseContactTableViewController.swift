@@ -21,16 +21,17 @@ class BrowseContactTableViewController: UITableViewController {
 
     
     override func viewDidLoad() {
-        
-        signIn()
-        
-        var query = PFUser.query()
-        query?.whereKey("isContact", equalTo: true)
-        do {
-            contacts = try query?.findObjects() as! [PFUser]
-        } catch {
-            print("caught")
-        }
+        let username = "myUsername"
+        let password = "myPassword"
+        PFUser.logInWithUsernameInBackground(username, password: password, block: {
+            (user: PFUser?, error: NSError?) -> Void in
+            if user == nil || error != nil{
+                print("login failed")
+            } else {
+                print("login success!!")
+                self.loadContacts()
+            }
+        })
     }
     
     
@@ -43,26 +44,26 @@ class BrowseContactTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
+        let vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
 
         let index: Int = self.tableView.indexPathForSelectedRow!.row
         vc.contact = contacts[index]
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
+        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
         
         cell.textLabel!.text = contacts[indexPath.row].email
         return cell
     }
     
-    func signIn() {
-        do {
-            try PFUser.logInWithUsername("myUsername", password: "myPassword")
-        } catch {
-            print (" wioll i hverr ")
-        }
-        print("in sign in")
-        print(PFUser.currentUser())
+    func loadContacts() {
+        let query = PFUser.query()
+        query?.whereKey("isContact", equalTo: true)
+        query?.findObjectsInBackgroundWithBlock({
+            PFQueryArrayResultBlock in
+            self.contacts = PFQueryArrayResultBlock.0 as! [PFUser]
+            self.tableView.reloadData()
+        })
     }
 }

@@ -41,6 +41,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     func sendMessages(text: String!) {
+        print("in send message")
         let message = JSQMessage(senderId: PFUser.currentUser()?.objectId, displayName: PFUser.currentUser()?.username, text: text)
         messages.append(message)
         
@@ -48,18 +49,20 @@ class ChatViewController: JSQMessagesViewController {
         postMessage["text"] = text
         postMessage["from"] = PFUser.currentUser()
         postMessage["chatRoom"] = chatRoom
-        var chatMessages = chatRoom!["messages"] as! [PFObject]
-        chatMessages.append(postMessage)
-        chatRoom?.addObject(chatMessages, forKey: "messages")
-        print(chatRoom)
-        do {
-            print("before chatRoomsaved")
-            try chatRoom!.save()
-            print("chatRoom saved")
-            try postMessage.save()
-        } catch {
-            print("nosave ")
-        }
+        
+        print("chatRoom = \(chatRoom)")
+        
+//        chatRoom!.saveInBackgroundWithBlock {
+//            PFBooleanResultBlock in
+//            print("saving chatroom in background")
+//            if (PFBooleanResultBlock.0){
+//                print("yay")
+//            } else {
+//                print("sadness")
+//            }
+//        }
+        
+        postMessage.saveInBackground()
     }
 
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
@@ -113,16 +116,20 @@ class ChatViewController: JSQMessagesViewController {
     
     
     func loadMessages() {
-        let chatRoomMessages = self.chatRoom!["messages"] as! [PFObject]
-        print("number of messages = \(chatRoomMessages.count)")
-        for message in chatRoomMessages {
-            let user: PFUser = message["from"] as! PFUser
-            let senderId = user.objectId
-            let displayName = user.username
-            let text = message["text"] as! String
-            messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
-        }
-
+        let chatRoomId = chatRoom?.objectId
+        let query = PFQuery(className: "Message")
+        query.findObjectsInBackgroundWithBlock({
+            PFQueryArrayResultBlock in
+            let rawMessages = PFQueryArrayResultBlock.0!
+            for message in rawMessages {
+                let user: PFUser = message["from"] as! PFUser
+                let senderId = user.objectId
+                let displayName = user.username
+                let text = message["text"] as! String
+                self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
+            }
+            self.collectionView?.reloadData()
+        })
     }
     
 }
