@@ -42,10 +42,7 @@ class ChatViewController: JSQMessagesViewController {
         
         let postMessage: PFObject = PFObject(className: "Message")
         postMessage["text"] = text
-
-        PFUser.currentUser()?.addObject(postMessage, forKey: "messages")
-        PFUser.currentUser()?.saveInBackground()
-        
+        postMessage.setObject(PFUser.currentUser()!.objectId! , forKey: "senderId")
         chatRoom?.addObject(postMessage, forKey: "messages")
         print("chatRoom = \(chatRoom)")
         
@@ -111,28 +108,20 @@ class ChatViewController: JSQMessagesViewController {
         return cell
     }
     
-    
     func loadMessages() {
         print("in loadmessages")
         print(chatRoom!)
-        let allCurrentUserMessages = PFUser.currentUser()?.objectForKey("messages") as! [PFObject]
         let rawMessages = self.chatRoom?.objectForKey("messages") as! [PFObject]
         print("rawMessages = \(rawMessages)")
         for message in rawMessages {
-            print("in for message in rawMessages")
             var senderId = PFUser.currentUser()!.objectId
             var displayName = PFUser.currentUser()!.username
-            print(message)
             let text = message["text"] as! String
-            print("senderId = \(senderId)")
-            print("displayName = \(displayName)")
-            print("text = \(text)")
-            if !allCurrentUserMessages.contains(message) {
+            if(message.objectForKey("senderId") as? String != PFUser.currentUser()?.objectId) {
                 senderId = contact?.objectId
                 displayName = contact?.username
             }
             self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
-            print("last line of for message in rawMessages")
         }
         print("finished loading messages")
     }
