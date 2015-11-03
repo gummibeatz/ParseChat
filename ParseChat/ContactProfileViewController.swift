@@ -17,6 +17,7 @@ class ContactProfileViewController: UIViewController {
     var chatRoom: PFObject?
     
     @IBAction func startChattingButtonTapped(sender: UIButton) {
+        print("chat button tapped")
         let chatVC: ChatViewController = ChatViewController()
 
         chatVC.senderDisplayName = PFUser.currentUser()?.username
@@ -26,7 +27,7 @@ class ContactProfileViewController: UIViewController {
         createOrLoadChatRoom( {
             completionHandler in
             print("finished creating or loading chatroom")
-            chatVC.chatRoom = self.chatRoom
+            chatVC.chatRoom = self.chatRoom    
             self.presentViewController(chatVC, animated: true, completion: nil)
             self.didMoveToParentViewController(self)
         })
@@ -40,27 +41,23 @@ class ContactProfileViewController: UIViewController {
     
     func createOrLoadChatRoom(completionHandler: () -> Void) {
         self.chatRoom = PFObject(className: "Chatroom")
-        
         let query = PFQuery(className: "Chatroom")
-        var contacts:[PFUser] = [PFUser.currentUser()!,contact!]
+        let contacts = [PFUser.currentUser()!, contact!]
+        query.includeKey("messages")
         query.whereKey("users", containsAllObjectsInArray: contacts)
+        print("about to get query")
         query.getFirstObjectInBackgroundWithBlock {
             (object: PFObject?, error: NSError?) -> Void in
             if error != nil || object == nil {
                 print("no chatroom")
-                contacts = [PFUser.currentUser()!,self.contact!]
-                self.chatRoom!["users"] = contacts
                 self.chatRoom!["messages"] = []
-                print("before chatroom is set to PFuser is set")
-//                let relation = self.chatRoom?.relationForKey("user")
-//                relation?.addObject(PFUser.currentUser()!)
-//                relation?.addObject(self.contact!)
-//                PFUser.currentUser()!["chatRoom"] = self.chatRoom
-                PFUser.currentUser()!.saveInBackground()
+                self.chatRoom!["users"] = contacts
+                self.chatRoom?.saveInBackground()
             } else {
                 print("chat room exists already")
                 self.chatRoom! = object!
             }
+            print(self.chatRoom)
             completionHandler()
         }
         

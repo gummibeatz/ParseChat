@@ -30,11 +30,6 @@ class ChatViewController: JSQMessagesViewController {
         navigationController?.navigationBar.topItem?.title = "Logout"
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
-    
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         sendMessages(text)
         finishSendingMessage()
@@ -47,20 +42,22 @@ class ChatViewController: JSQMessagesViewController {
         
         let postMessage: PFObject = PFObject(className: "Message")
         postMessage["text"] = text
-        postMessage["from"] = PFUser.currentUser()
-        postMessage["chatRoom"] = chatRoom
+
+        PFUser.currentUser()?.addObject(postMessage, forKey: "messages")
+        PFUser.currentUser()?.saveInBackground()
         
+        chatRoom?.addObject(postMessage, forKey: "messages")
         print("chatRoom = \(chatRoom)")
         
-//        chatRoom!.saveInBackgroundWithBlock {
-//            PFBooleanResultBlock in
-//            print("saving chatroom in background")
-//            if (PFBooleanResultBlock.0){
-//                print("yay")
-//            } else {
-//                print("sadness")
-//            }
-//        }
+        chatRoom!.saveInBackgroundWithBlock {
+            PFBooleanResultBlock in
+            print("saving chatroom in background")
+            if (PFBooleanResultBlock.0){
+                print("yay")
+            } else {
+                print("sadness")
+            }
+        }
         
         postMessage.saveInBackground()
     }
@@ -86,7 +83,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        let icon = UIImage(named: "Estefania")
+        let icon = UIImage(named: "icon")
         let avatar = JSQMessagesAvatarImage(avatarImage: icon, highlightedImage: icon, placeholderImage: icon)
         return avatar
     }
@@ -116,20 +113,28 @@ class ChatViewController: JSQMessagesViewController {
     
     
     func loadMessages() {
-        let chatRoomId = chatRoom?.objectId
-        let query = PFQuery(className: "Message")
-        query.findObjectsInBackgroundWithBlock({
-            PFQueryArrayResultBlock in
-            let rawMessages = PFQueryArrayResultBlock.0!
-            for message in rawMessages {
-                let user: PFUser = message["from"] as! PFUser
-                let senderId = user.objectId
-                let displayName = user.username
-                let text = message["text"] as! String
-                self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
+        print("in loadmessages")
+        print(chatRoom!)
+        let allCurrentUserMessages = PFUser.currentUser()?.objectForKey("messages") as! [PFObject]
+        let rawMessages = self.chatRoom?.objectForKey("messages") as! [PFObject]
+        print("rawMessages = \(rawMessages)")
+        for message in rawMessages {
+            print("in for message in rawMessages")
+            var senderId = PFUser.currentUser()!.objectId
+            var displayName = PFUser.currentUser()!.username
+            print(message)
+            let text = message["text"] as! String
+            print("senderId = \(senderId)")
+            print("displayName = \(displayName)")
+            print("text = \(text)")
+            if !allCurrentUserMessages.contains(message) {
+                senderId = contact?.objectId
+                displayName = contact?.username
             }
-            self.collectionView?.reloadData()
-        })
+            self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
+            print("last line of for message in rawMessages")
+        }
+        print("finished loading messages")
     }
     
 }
@@ -144,7 +149,7 @@ class ChatViewController: JSQMessagesViewController {
 
 
 
-// FOr REFERENCE COOL COMPARAOTRS SWFIT
+// Forr REFERENCE COOL COMPARATORS
 public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
     return lhs.compare(rhs) == NSComparisonResult.OrderedSame
 }
