@@ -13,25 +13,33 @@ import Parse
 class BrowseContactTableViewController: UITableViewController {
     
     var contacts: [PFUser] = []
-    
 
     override func viewDidLoad() {
-        let username = "myUsername"
-        let password = "myPassword"
+        
         print("view did load")
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject("qxhbCealXf", forKey: "userId")
+        let currentUser = PFUser.currentUser()
+        if currentUser == nil {
+            print("could not load user from cache")
+            let username = "myUsername"
+            let password = "myPassword"
+            PFUser.logInWithUsernameInBackground(username, password: password, block: {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user == nil || error != nil {
+                    print("login failed")
+                } else {
+                    print("login success!!")
+                }
+            })
+        } else {
+            print("loaded current user from cache")
+        }
+        self.loadContacts()
         
-        PFUser.logInWithUsernameInBackground(username, password: password, block: {
-            (user: PFUser?, error: NSError?) -> Void in
-            if user == nil || error != nil {
-                print("login failed")
-            } else {
-                print("login success!!")
-                self.loadContacts()
-            }
-        })
+        
+        //not using this yet..
+//        let userDefaults = NSUserDefaults.standardUserDefaults()
+//        userDefaults.setObject("qxhbCealXf", forKey: "userId")
     }
     
     
@@ -61,14 +69,24 @@ class BrowseContactTableViewController: UITableViewController {
     }
     
     func loadContacts() {
-        let query = PFUser.query()
-        query?.whereKey("isContact", equalTo: true)
-//        query?.fromLocalDatastore()
+        let query = PFUser.query()?.whereKey("isContact", equalTo: true)
+        query?.cachePolicy = .NetworkElseCache
+        if (query?.hasCachedResult() == false) {
+            print("no cached Contacts exist")
+        } else {
+            print("cached Contacts exist")
+        }
+        //        query?.fromLocalDatastore()
         query?.findObjectsInBackgroundWithBlock({
-            PFQueryArrayResultBlock in
-            self.contacts = PFQueryArrayResultBlock.0 as! [PFUser]
-            self.tableView.reloadData()
-            PFObject.pinAllInBackground(self.contacts)
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if let error = error {
+                print(error)
+            } else {
+                self.contacts = objects as! [PFUser]
+                print("got contacts from server or cache")
+                self.tableView.reloadData()
+            }
+
         })
     }
 }
