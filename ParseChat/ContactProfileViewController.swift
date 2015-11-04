@@ -16,13 +16,20 @@ class ContactProfileViewController: UIViewController {
     var contact: PFUser?
     var chatRoom: PFObject?
     
+    @IBOutlet weak var emailLabel: UILabel!
+    
+    override func viewDidLoad() {
+        emailLabel.text = contact?.email
+    }
+    
     @IBAction func startChattingButtonTapped(sender: UIButton) {
         print("chat button tapped")
         let chatVC: ChatViewController = ChatViewController()
-
+        
         chatVC.senderDisplayName = PFUser.currentUser()?.username
         chatVC.senderId = PFUser.currentUser()?.objectId
-        chatVC.contact = contact
+        
+//        chatVC.chatRoom = ChatRoom(users)
         
         createOrLoadChatRoom( {
             completionHandler in
@@ -32,18 +39,13 @@ class ContactProfileViewController: UIViewController {
             self.presentViewController(chatVC, animated: true, completion: nil)
             self.didMoveToParentViewController(self)
         })
-
-    }
-    @IBOutlet weak var emailLabel: UILabel!
-    
-    override func viewDidLoad() {
-        emailLabel.text = contact?.email
+        
     }
     
     func createOrLoadChatRoom(completionHandler: () -> Void) {
         self.chatRoom = PFObject(className: "Chatroom")
         let query = PFQuery(className: "Chatroom")
-        query.fromLocalDatastore()
+//        query.fromLocalDatastore()
         let contacts = [PFUser.currentUser()!, contact!]
         query.includeKey("messages")
         query.whereKey("users", containsAllObjectsInArray: contacts)
@@ -61,13 +63,13 @@ class ContactProfileViewController: UIViewController {
                     print("error = \(error)")
                     if(succeeded! && (error == nil)) {
                         print("chat room saved!!")
-                        self.chatRoom?.pinInBackground()
+//                        self.chatRoom?.pinInBackground()
                     }
                 })
             } else {
                 print("chat room exists already")
                 self.chatRoom! = object!
-                self.chatRoom?.pinInBackground()
+//                self.chatRoom?.pinInBackground()
             }
             print(self.chatRoom)
             completionHandler()

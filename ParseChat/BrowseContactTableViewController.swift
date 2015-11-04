@@ -12,15 +12,17 @@ import Parse
 
 class BrowseContactTableViewController: UITableViewController {
     
-    var idx: Int?
     var contacts: [PFUser] = []
-    enum QueryErrors: ErrorType {
-        case BadCast
-    }
     
+
     override func viewDidLoad() {
         let username = "myUsername"
         let password = "myPassword"
+        print("view did load")
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setObject("qxhbCealXf", forKey: "userId")
+        
         PFUser.logInWithUsernameInBackground(username, password: password, block: {
             (user: PFUser?, error: NSError?) -> Void in
             if user == nil || error != nil {
@@ -44,21 +46,24 @@ class BrowseContactTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
 
-        let index: Int = self.tableView.indexPathForSelectedRow!.row
-        vc.contact = contacts[index]
+        let indexPath = self.tableView.indexPathForSelectedRow
+        vc.contact = contacts[indexPath!.row]
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
         
-        cell.textLabel!.text = contacts[indexPath.row].email
+        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("contactCellIdentifier", forIndexPath: indexPath)
+        
+        let contact: PFUser = contacts[indexPath.row]
+        
+        cell.textLabel!.text = contact["username"] as? String
         return cell
     }
     
     func loadContacts() {
         let query = PFUser.query()
         query?.whereKey("isContact", equalTo: true)
-        query?.fromLocalDatastore()
+//        query?.fromLocalDatastore()
         query?.findObjectsInBackgroundWithBlock({
             PFQueryArrayResultBlock in
             self.contacts = PFQueryArrayResultBlock.0 as! [PFUser]

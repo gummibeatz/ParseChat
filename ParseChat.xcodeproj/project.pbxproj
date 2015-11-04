@@ -21,6 +21,7 @@
 		CCDBBC7C1BE58A5A0033D6DC /* BrowseContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */; };
 		CCDBBC7E1BE5942F0033D6DC /* ContactProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */; };
 		CCDBBC801BE5991D0033D6DC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */; };
+		DFCB53E51BEA927100EDD725 /* Chatroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCB53E41BEA927100EDD725 /* Chatroom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseContactTableViewController.swift; sourceTree = "<group>"; };
 		CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactProfileViewController.swift; sourceTree = "<group>"; };
 		CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		DFCB53E41BEA927100EDD725 /* Chatroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chatroom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */,
 				CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */,
 				CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */,
+				DFCB53E41BEA927100EDD725 /* Chatroom.swift */,
 				CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */,
 			);
 			name = "Main ";
@@ -269,6 +272,7 @@
 				CC5356AC1BE94FAC00FC6D30 /* UserLoginController.swift in Sources */,
 				CCDBBC7E1BE5942F0033D6DC /* ContactProfileViewController.swift in Sources */,
 				CC7B5D0A1BE5831700B63ED4 /* ViewController.swift in Sources */,
+				DFCB53E51BEA927100EDD725 /* Chatroom.swift in Sources */,
 				CC7B5D081BE5831700B63ED4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
