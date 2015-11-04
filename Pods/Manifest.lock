@@ -5,15 +5,27 @@ PODS:
   - JSQSystemSoundPlayer (2.0.1)
   - Parse (1.9.1):
     - Bolts/Tasks (>= 1.4.0)
+  - ReachabilitySwift (2.1)
 
 DEPENDENCIES:
   - JSQMessagesViewController
   - Parse
+  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
+
+EXTERNAL SOURCES:
+  ReachabilitySwift:
+    :git: https://github.com/ashleymills/Reachability.swift
+
+CHECKOUT OPTIONS:
+  ReachabilitySwift:
+    :commit: 89b2431fe262bc5915972472e36d04c067f686bc
+    :git: https://github.com/ashleymills/Reachability.swift
 
 SPEC CHECKSUMS:
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
+  ReachabilitySwift: 99bb7acceebb90b2048b4a8fd6539be96454dcb2
 
 COCOAPODS: 0.39.0

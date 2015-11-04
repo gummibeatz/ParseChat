@@ -8,8 +8,6 @@
 
 import Foundation
 import UIKit
-import Reachability
+import SystemConfiguration
 
-func networkIsReachable {
-    let reachability: Reachability  = Reac
-}
+Reacha
