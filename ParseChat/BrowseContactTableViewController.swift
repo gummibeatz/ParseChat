@@ -60,6 +60,7 @@ class BrowseContactTableViewController: UITableViewController {
     func loadContacts() {
         let query = PFUser.query()
         query?.whereKey("isContact", equalTo: true)
+        query?.fromLocalDatastore()
         query?.findObjectsInBackgroundWithBlock({
             PFQueryArrayResultBlock in
             self.contacts = PFQueryArrayResultBlock.0 as! [PFUser]

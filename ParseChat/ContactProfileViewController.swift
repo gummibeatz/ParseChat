@@ -54,12 +54,21 @@ class ContactProfileViewController: UIViewController {
                 print("no chatroom")
                 self.chatRoom!["messages"] = []
                 self.chatRoom!["users"] = contacts
-                self.chatRoom?.saveInBackground()
+                self.chatRoom?.saveEventually({
+                    (succeeded: Bool?, error: NSError?) in
+                    print("inside chatroom save in background with block")
+                    print("succeeded = \(succeeded)")
+                    print("error = \(error)")
+                    if(succeeded! && (error == nil)) {
+                        print("chat room saved!!")
+                        self.chatRoom?.pinInBackground()
+                    }
+                })
             } else {
                 print("chat room exists already")
                 self.chatRoom! = object!
+                self.chatRoom?.pinInBackground()
             }
-            self.chatRoom!.pinInBackground()
             print(self.chatRoom)
             completionHandler()
         }
