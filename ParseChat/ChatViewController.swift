@@ -13,7 +13,6 @@ import JSQMessagesViewController
 
 class ChatViewController: JSQMessagesViewController {
     
-    var contact: PFUser?
     var chatRoom: PFObject?
     
     var messages = [JSQMessage]()
@@ -31,8 +30,20 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        sendMessages(text)
-        finishSendingMessage()
+        if (PFUser.currentUser() != nil) {
+            sendMessages(text)
+            finishSendingMessage()
+        } else {
+            
+            let alert = UIAlertController(title: "Could Not Send Message", message: "You must be logged in to chat", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default, handler: { (alert:UIAlertAction) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            
+        }
     }
     
     func sendMessages(text: String!) {
@@ -106,17 +117,21 @@ class ChatViewController: JSQMessagesViewController {
     
     func loadMessages() {
         let rawMessages = self.chatRoom?.objectForKey("messages") as! [PFObject]
+        let currentUser: PFUser = PFUser.currentUser()! as PFUser!
+        let otherUser: PFUser = (self.chatRoom?.objectForKey("users") as! [PFUser]).filter({$0.objectId != currentUser.objectId!}).first! as PFUser!
+        print(rawMessages)
         for message in rawMessages {
-            var senderId = PFUser.currentUser()!.objectId
-            var displayName = PFUser.currentUser()!.username
-            let text = message["text"] as! String
-            if(message.objectForKey("senderId") as? String != PFUser.currentUser()?.objectId) {
-                senderId = contact?.objectId
-                displayName = contact?.username
+            let senderId: String = message.objectForKey("senderId") as! String
+            let text: String = message.objectForKey("text") as! String
+            var displayName: String = currentUser.username!
+            
+            if senderId != currentUser.objectId {
+                displayName = otherUser.username!
             }
             self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
         }
     }
+    
     
 }
 
