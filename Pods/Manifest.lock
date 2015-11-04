@@ -10,16 +10,7 @@ PODS:
 DEPENDENCIES:
   - JSQMessagesViewController
   - Parse
-  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
-
-EXTERNAL SOURCES:
-  ReachabilitySwift:
-    :git: https://github.com/ashleymills/Reachability.swift
-
-CHECKOUT OPTIONS:
-  ReachabilitySwift:
-    :commit: 89b2431fe262bc5915972472e36d04c067f686bc
-    :git: https://github.com/ashleymills/Reachability.swift
+  - ReachabilitySwift
 
 SPEC CHECKSUMS:
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b

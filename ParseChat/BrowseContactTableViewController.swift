@@ -18,14 +18,12 @@ class BrowseContactTableViewController: UITableViewController {
         case BadCast
     }
     
-
-    
     override func viewDidLoad() {
         let username = "myUsername"
         let password = "myPassword"
         PFUser.logInWithUsernameInBackground(username, password: password, block: {
             (user: PFUser?, error: NSError?) -> Void in
-            if user == nil || error != nil{
+            if user == nil || error != nil {
                 print("login failed")
             } else {
                 print("login success!!")

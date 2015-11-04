@@ -17,7 +17,6 @@
 		CC7B5D0D1BE5831700B63ED4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC7B5D0B1BE5831700B63ED4 /* Main.storyboard */; };
 		CC7B5D0F1BE5831700B63ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */; };
 		CC7B5D121BE5831700B63ED4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC7B5D101BE5831700B63ED4 /* LaunchScreen.storyboard */; };
-		CC8D20911BEA5FFE00A5F7F7 /* NetworkingReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8D20901BEA5FFE00A5F7F7 /* NetworkingReachability.swift */; };
 		CCA7E8551BE6AC1E005918F3 /* ExistingMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */; };
 		CCDBBC7C1BE58A5A0033D6DC /* BrowseContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */; };
 		CCDBBC7E1BE5942F0033D6DC /* ContactProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */; };
@@ -39,7 +38,6 @@
 		CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC7B5D111BE5831700B63ED4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC7B5D131BE5831700B63ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CC8D20901BEA5FFE00A5F7F7 /* NetworkingReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingReachability.swift; sourceTree = "<group>"; };
 		CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingMessagesController.swift; sourceTree = "<group>"; };
 		CCDBBC7A1BE586130033D6DC /* ParseChat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParseChat-Bridging-Header.h"; sourceTree = "<group>"; };
 		CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseContactTableViewController.swift; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				CC7B5D071BE5831700B63ED4 /* AppDelegate.swift */,
-				CC8D20901BEA5FFE00A5F7F7 /* NetworkingReachability.swift */,
 				CC5356A81BE94F2B00FC6D30 /* Main  */,
 				CC5356A91BE94F3600FC6D30 /* Login */,
 				CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */,
@@ -266,7 +263,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC8D20911BEA5FFE00A5F7F7 /* NetworkingReachability.swift in Sources */,
 				CCA7E8551BE6AC1E005918F3 /* ExistingMessagesController.swift in Sources */,
 				CCDBBC801BE5991D0033D6DC /* ChatViewController.swift in Sources */,
 				CCDBBC7C1BE58A5A0033D6DC /* BrowseContactTableViewController.swift in Sources */,
