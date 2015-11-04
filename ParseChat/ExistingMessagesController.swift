@@ -52,7 +52,7 @@ class ExistingMessagesController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
         
-        cell.textLabel!.text = "test"//conversations[indexPath.row]
+        cell.textLabel!.text = "test"
         return cell
     }
     

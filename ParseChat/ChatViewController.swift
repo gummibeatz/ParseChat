@@ -99,7 +99,6 @@ class ChatViewController: JSQMessagesViewController {
             cell.textView!.textColor = UIColor.whiteColor()
         }
         let attributes : [String:AnyObject] = [NSForegroundColorAttributeName:cell.textView!.textColor!, NSUnderlineStyleAttributeName: 1]
-        
         cell.textView!.linkTextAttributes = attributes
         cell.textView!.linkTextAttributes = [NSForegroundColorAttributeName: cell.textView!.textColor!, NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
         return cell

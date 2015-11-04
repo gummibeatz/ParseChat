@@ -64,6 +64,7 @@ class BrowseContactTableViewController: UITableViewController {
             PFQueryArrayResultBlock in
             self.contacts = PFQueryArrayResultBlock.0 as! [PFUser]
             self.tableView.reloadData()
+            PFObject.pinAllInBackground(self.contacts)
         })
     }
 }
