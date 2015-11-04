@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Reachability
 
 func networkIsReachable {
     let reachability: Reachability  = Reac
