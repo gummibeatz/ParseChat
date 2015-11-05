@@ -62,7 +62,8 @@ class BrowseContactTableViewController: UITableViewController {
     }
     
     func loadContacts() {
-        let query = PFUser.query()?.whereKey("isContact", equalTo: true)
+        let query = PFUser.query()
+        query?.whereKey("isContact", equalTo: true)
         query?.cachePolicy = .CacheThenNetwork
         if (query?.hasCachedResult() == false) {
             print("no cached Contacts exist")
