@@ -41,10 +41,13 @@ class ContactProfileViewController: UIViewController {
     }
     
     func createOrLoadChatRoom(completionHandler: () -> Void) {
+        print("in create or load chatroom")
         self.chatRoom = PFObject(className: "Chatroom")
         let query = PFQuery(className: "Chatroom")
-        query.fromLocalDatastore()
         let contacts = [PFUser.currentUser()!, contact!]
+        if !networkIsAvailable() {
+            query.fromLocalDatastore()
+        }
         query.includeKey("messages")
         query.whereKey("users", containsAllObjectsInArray: contacts)
         print("about to get query")
@@ -61,13 +64,27 @@ class ContactProfileViewController: UIViewController {
                     print("error = \(error)")
                     if(succeeded! && (error == nil)) {
                         print("chat room saved!!")
-                        self.chatRoom?.pinInBackground()
+                        self.chatRoom?.pinInBackgroundWithBlock({
+                            PFBooleanResultBlock in
+                            if PFBooleanResultBlock.0 {
+                                print("chatroom pinned in background")
+                            } else {
+                                print("chatroom was not pinned")
+                            }
+                        })
                     }
                 })
             } else {
                 print("chat room exists already")
                 self.chatRoom! = object!
-                self.chatRoom?.pinInBackground()
+                self.chatRoom?.pinInBackgroundWithBlock({
+                  PFBooleanResultBlock in
+                    if PFBooleanResultBlock.0 {
+                        print("chatroom pinned in background")
+                    } else {
+                        print("chatroom was not pinned")
+                    }
+                })
             }
             print(self.chatRoom)
             completionHandler()

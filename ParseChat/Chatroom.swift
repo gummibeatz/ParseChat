@@ -28,8 +28,6 @@ class Chatroom: PFObject, PFSubclassing{
     }
 
     
-    
-    
     static func parseClassName() -> String {
         return "Chatroom"
     }

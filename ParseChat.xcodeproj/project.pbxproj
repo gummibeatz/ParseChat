@@ -90,7 +90,6 @@
 				CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */,
 				CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */,
 				CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */,
-				DFCB53E41BEA927100EDD725 /* Chatroom.swift */,
 				CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */,
 			);
 			name = "Main ";
@@ -129,6 +128,7 @@
 			children = (
 				CC7B5D071BE5831700B63ED4 /* AppDelegate.swift */,
 				CC96D7921BEAE9C100D4AB42 /* NetworkChecks.swift */,
+				CCCF38CC1BEBDAA00031A760 /* Models */,
 				CC5356A81BE94F2B00FC6D30 /* Main  */,
 				CC5356A91BE94F3600FC6D30 /* Login */,
 				CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */,
@@ -136,6 +136,14 @@
 				CC7B5D131BE5831700B63ED4 /* Info.plist */,
 			);
 			path = ParseChat;
+			sourceTree = "<group>";
+		};
+		CCCF38CC1BEBDAA00031A760 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DFCB53E41BEA927100EDD725 /* Chatroom.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		CCDBBC791BE585E30033D6DC /* Supporting Files */ = {

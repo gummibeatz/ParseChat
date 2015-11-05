@@ -13,11 +13,22 @@ import ReachabilitySwift
 func networkIsAvailable() -> Bool {
     do {
         let reachability = try Reachability.reachabilityForInternetConnection()
-        if reachability.isReachable() {return true}
-        if reachability.isReachableViaWiFi() {return true}
-        if reachability.isReachableViaWWAN() {return true}
+        if reachability.isReachable() {
+            print("reachable by wifi")
+            return true
+        }
+        if reachability.isReachableViaWiFi() {
+            print("is Reachable")
+            return true
+        }
+        if reachability.isReachableViaWWAN() {
+            print("reachable by wifi")
+            return true
+        }
     } catch {
+        print("unreachable")
         return false
     }
+    print("unreachable")
     return false
 }

@@ -49,6 +49,7 @@ class ChatViewController: JSQMessagesViewController {
     func sendMessages(text: String!) {
         print("in send message")
         let message = JSQMessage(senderId: PFUser.currentUser()?.objectId, displayName: PFUser.currentUser()?.username, text: text)
+        
         messages.append(message)
         
         let postMessage: PFObject = PFObject(className: "Message")
@@ -66,11 +67,8 @@ class ChatViewController: JSQMessagesViewController {
                 print("sadness")
             }
         })
+        postMessage.pinInBackground()
         
-        postMessage.saveEventually({
-            PFBooleanResultBlock in
-            postMessage.pinInBackground()
-        })
     }
 
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
@@ -120,6 +118,7 @@ class ChatViewController: JSQMessagesViewController {
     
     func loadMessages() {
         let rawMessages = self.chatRoom?.objectForKey("messages") as! [PFObject]
+        PFObject.pinAllInBackground(rawMessages)
         let currentUser: PFUser = PFUser.currentUser()! as PFUser!
         let otherUser: PFUser = (self.chatRoom?.objectForKey("users") as! [PFUser]).filter({$0.objectId != currentUser.objectId!}).first! as PFUser!
         print(rawMessages)

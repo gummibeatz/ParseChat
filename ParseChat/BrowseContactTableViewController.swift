@@ -14,12 +14,13 @@ import ReachabilitySwift
 class BrowseContactTableViewController: UITableViewController {
     
     var contacts: [PFUser] = []
-    let offlineObjectId = "qxhbCealXf"
+//    let offlineObjectId = "qxhbCealXf" //user
+    let offlineObjectId = "zXdDZGzPno" //user3
     
 
     override func viewDidLoad() {
-        let username = "myUsername"
-        let password = "myPassword"
+        let username = "myUsername3"
+        let password = "myPassword3"
         print("view did load")
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -27,6 +28,7 @@ class BrowseContactTableViewController: UITableViewController {
         if networkIsAvailable() {
             PFUser.logInWithUsernameInBackground(username, password: password)
         }
+
         self.loadContacts()
     }
     
