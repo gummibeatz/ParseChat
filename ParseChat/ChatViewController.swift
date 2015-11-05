@@ -30,7 +30,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        if (PFUser.currentUser() != nil) {
+        if (networkIsAvailable()) {
             sendMessages(text)
             finishSendingMessage()
         } else {
@@ -57,7 +57,7 @@ class ChatViewController: JSQMessagesViewController {
         chatRoom?.addObject(postMessage, forKey: "messages")
         print("chatRoom = \(chatRoom)")
         
-        chatRoom!.saveInBackgroundWithBlock {
+        chatRoom!.saveEventually({
             PFBooleanResultBlock in
             print("saving chatroom in background")
             if (PFBooleanResultBlock.0){
@@ -65,9 +65,12 @@ class ChatViewController: JSQMessagesViewController {
             } else {
                 print("sadness")
             }
-        }
+        })
         
-        postMessage.saveInBackground()
+        postMessage.saveEventually({
+            PFBooleanResultBlock in
+            postMessage.pinInBackground()
+        })
     }
 
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {

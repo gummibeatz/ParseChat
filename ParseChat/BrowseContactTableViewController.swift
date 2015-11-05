@@ -14,6 +14,7 @@ import ReachabilitySwift
 class BrowseContactTableViewController: UITableViewController {
     
     var contacts: [PFUser] = []
+    let offlineObjectId = "qxhbCealXf"
     
 
     override func viewDidLoad() {
@@ -22,11 +23,9 @@ class BrowseContactTableViewController: UITableViewController {
         print("view did load")
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject("qxhbCealXf", forKey: "userId")
-        do {
-            try PFUser.logInWithUsername(username, password: password)
-        } catch {
-            print("no login")
+        userDefaults.setObject(offlineObjectId, forKey: "userId")
+        if networkIsAvailable() {
+            PFUser.logInWithUsernameInBackground(username, password: password)
         }
         self.loadContacts()
     }
@@ -61,18 +60,16 @@ class BrowseContactTableViewController: UITableViewController {
         print("in load contacts")
         let query = PFUser.query()
         query?.whereKey("isContact", equalTo: true)
-        
-        let reachabililty: Reachability!
-        do {
-            reachabililty = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            print("Unable to create Reachability")
+        if !networkIsAvailable() {
+            print("network is not available")
             query?.fromLocalDatastore()
         }
-
         query?.findObjectsInBackgroundWithBlock({
             PFQueryArrayResultBlock in
             self.contacts = (PFQueryArrayResultBlock.0 as! [PFUser]).filter({$0.objectId != PFUser.currentUser()?.objectId})
+            if(!networkIsAvailable()) {
+                self.contacts = (PFQueryArrayResultBlock.0 as! [PFUser]).filter({$0.objectId != self.offlineObjectId})
+            }
             self.tableView.reloadData()
             PFObject.pinAllInBackground(self.contacts)
         })
