@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import Parse
+import ReachabilitySwift
 
 class BrowseContactTableViewController: UITableViewController {
     
@@ -22,16 +23,12 @@ class BrowseContactTableViewController: UITableViewController {
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         userDefaults.setObject("qxhbCealXf", forKey: "userId")
-        
-        PFUser.logInWithUsernameInBackground(username, password: password, block: {
-            (user: PFUser?, error: NSError?) -> Void in
-            if user == nil || error != nil {
-                print("login failed")
-            } else {
-                print("login success!!")
-                self.loadContacts()
-            }
-        })
+        do {
+            try PFUser.logInWithUsername(username, password: password)
+        } catch {
+            print("no login")
+        }
+        self.loadContacts()
     }
     
     
@@ -61,14 +58,25 @@ class BrowseContactTableViewController: UITableViewController {
     }
     
     func loadContacts() {
+        print("in load contacts")
         let query = PFUser.query()
         query?.whereKey("isContact", equalTo: true)
-//        query?.fromLocalDatastore()
+        
+        let reachabililty: Reachability!
+        do {
+            reachabililty = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            query?.fromLocalDatastore()
+        }
+
         query?.findObjectsInBackgroundWithBlock({
             PFQueryArrayResultBlock in
-            self.contacts = PFQueryArrayResultBlock.0 as! [PFUser]
+            self.contacts = (PFQueryArrayResultBlock.0 as! [PFUser]).filter({$0.objectId != PFUser.currentUser()?.objectId})
             self.tableView.reloadData()
             PFObject.pinAllInBackground(self.contacts)
         })
+        
     }
+
 }
