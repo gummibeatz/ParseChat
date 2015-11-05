@@ -25,30 +25,37 @@ class ContactProfileViewController: UIViewController {
     @IBAction func startChattingButtonTapped(sender: UIButton) {
         print("chat button tapped")
         let chatVC: ChatViewController = ChatViewController()
+        chatVC.users.append(contact!)
+        print("in startChattingButtonTapped contact = \(contact)")
+        self.presentViewController(chatVC, animated: true, completion: nil)
+        self.didMoveToParentViewController(self)
         
-        chatVC.senderDisplayName = PFUser.currentUser()?.username
-        chatVC.senderId = PFUser.currentUser()?.objectId
         
-//        chatVC.chatRoom = ChatRoom(users)
-        
-        createOrLoadChatRoom( {
-            completionHandler in
-            print("finished creating or loading chatroom")
-            chatVC.chatRoom = self.chatRoom
-            
-            self.presentViewController(chatVC, animated: true, completion: nil)
-            self.didMoveToParentViewController(self)
-        })
-        
+//        createOrLoadChatRoom( {
+//            completionHandler in
+//            print("finished creating or loading chatroom")
+//            
+//            
+//            chatVC.chatRoom = self.chatRoom
+//            self.presentViewController(chatVC, animated: true, completion: nil)
+//            self.didMoveToParentViewController(self)
+//        })
     }
     
     func createOrLoadChatRoom(completionHandler: () -> Void) {
         self.chatRoom = PFObject(className: "Chatroom")
         let query = PFQuery(className: "Chatroom")
-//        query.fromLocalDatastore()
         let contacts = [PFUser.currentUser()!, contact!]
         query.includeKey("messages")
         query.whereKey("users", containsAllObjectsInArray: contacts)
+        
+        query.cachePolicy = .CacheThenNetwork
+        if (query.hasCachedResult()) {
+            print("cached chatroom exists")
+        } else {
+            print("cached chatroom doesn't exist")
+        }
+        
         print("about to get query")
         query.getFirstObjectInBackgroundWithBlock {
             (object: PFObject?, error: NSError?) -> Void in

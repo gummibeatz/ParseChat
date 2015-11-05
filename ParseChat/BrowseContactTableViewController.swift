@@ -35,29 +35,22 @@ class BrowseContactTableViewController: UITableViewController {
             print("loaded current user from cache")
         }
         self.loadContacts()
-        
-        
-        //not using this yet..
-//        let userDefaults = NSUserDefaults.standardUserDefaults()
-//        userDefaults.setObject("qxhbCealXf", forKey: "userId")
     }
     
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
 
         let indexPath = self.tableView.indexPathForSelectedRow
         vc.contact = contacts[indexPath!.row]
+        print("browse controller passing \(vc.contact)")
     }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("contactCellIdentifier", forIndexPath: indexPath)
@@ -70,13 +63,12 @@ class BrowseContactTableViewController: UITableViewController {
     
     func loadContacts() {
         let query = PFUser.query()?.whereKey("isContact", equalTo: true)
-        query?.cachePolicy = .NetworkElseCache
+        query?.cachePolicy = .CacheThenNetwork
         if (query?.hasCachedResult() == false) {
             print("no cached Contacts exist")
         } else {
             print("cached Contacts exist")
         }
-        //        query?.fromLocalDatastore()
         query?.findObjectsInBackgroundWithBlock({
             (objects: [PFObject]?, error: NSError?) -> Void in
             if let error = error {
@@ -86,7 +78,6 @@ class BrowseContactTableViewController: UITableViewController {
                 print("got contacts from server or cache")
                 self.tableView.reloadData()
             }
-
         })
     }
 }
