@@ -29,8 +29,6 @@ class ContactProfileViewController: UIViewController {
         chatVC.senderDisplayName = PFUser.currentUser()?.username
         chatVC.senderId = PFUser.currentUser()?.objectId
         
-//        chatVC.chatRoom = ChatRoom(users)
-        
         createOrLoadChatRoom( {
             completionHandler in
             print("finished creating or loading chatroom")
@@ -45,7 +43,7 @@ class ContactProfileViewController: UIViewController {
     func createOrLoadChatRoom(completionHandler: () -> Void) {
         self.chatRoom = PFObject(className: "Chatroom")
         let query = PFQuery(className: "Chatroom")
-//        query.fromLocalDatastore()
+        query.fromLocalDatastore()
         let contacts = [PFUser.currentUser()!, contact!]
         query.includeKey("messages")
         query.whereKey("users", containsAllObjectsInArray: contacts)
@@ -63,13 +61,13 @@ class ContactProfileViewController: UIViewController {
                     print("error = \(error)")
                     if(succeeded! && (error == nil)) {
                         print("chat room saved!!")
-//                        self.chatRoom?.pinInBackground()
+                        self.chatRoom?.pinInBackground()
                     }
                 })
             } else {
                 print("chat room exists already")
                 self.chatRoom! = object!
-//                self.chatRoom?.pinInBackground()
+                self.chatRoom?.pinInBackground()
             }
             print(self.chatRoom)
             completionHandler()
