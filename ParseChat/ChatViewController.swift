@@ -13,24 +13,31 @@ import JSQMessagesViewController
 
 class ChatViewController: JSQMessagesViewController {
     
-    var chatRoom: PFObject?
-    
+    var chatroom: PFObject?
+    var users = [PFUser]()
     var messages = [JSQMessage]()
+    
     var avatars = Dictionary<String, UIImage>()
 
-    
     override func viewDidLoad() {
+        print("chat view loaded")
         super.viewDidLoad()
+        users.append(PFUser.currentUser()!)
+        print("users = \(users)")
+        senderId = PFUser.currentUser()?.objectId
+        senderDisplayName = PFUser.currentUser()?.username
         
-        loadMessages()
-        
-        inputToolbar?.contentView?.leftBarButtonItem = nil
-        automaticallyScrollsToMostRecentMessage = true
-        navigationController?.navigationBar.topItem?.title = "Logout"
+        createOrLoadChatRoom {
+            () -> Void in
+//            print("create")
+//            (self.chatroom?.objectForKey("users") as! [PFUser]).map({print($0)})
+            
+            self.loadMessages()
+        }
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        if (networkIsAvailable()) {
+        if (PFUser.currentUser() != nil) {
             sendMessages(text)
             finishSendingMessage()
         } else {
@@ -41,36 +48,34 @@ class ChatViewController: JSQMessagesViewController {
             })
             alert.addAction(action)
             self.presentViewController(alert, animated: true, completion: nil)
-            
-            
         }
     }
     
     func sendMessages(text: String!) {
-        print("in send message")
+        print("creating message object")
         let message = JSQMessage(senderId: PFUser.currentUser()?.objectId, displayName: PFUser.currentUser()?.username, text: text)
         messages.append(message)
         
         let postMessage: PFObject = PFObject(className: "Message")
         postMessage["text"] = text
-        postMessage.setObject(PFUser.currentUser()!.objectId! , forKey: "senderId")
-        chatRoom?.addObject(postMessage, forKey: "messages")
-        print("chatRoom = \(chatRoom)")
+        postMessage["senderId"] = PFUser.currentUser()!.objectId
         
-        chatRoom!.saveEventually({
-            PFBooleanResultBlock in
+        
+        chatroom?.addObject(postMessage, forKey: "messages")
+        print("added message to chatroom")
+        print("chatroom about to be saved: \(chatroom)")
+
+        chatroom!.saveInBackgroundWithBlock {
+            (success: Bool?, error: NSError?) -> Void in
             print("saving chatroom in background")
-            if (PFBooleanResultBlock.0){
-                print("yay")
+            if (success!){
+                print("saved chatroom")
             } else {
-                print("sadness")
+                print("chatroom not saved")
+                print("error: \(error)")
             }
-        })
-        
-        postMessage.saveEventually({
-            PFBooleanResultBlock in
-            postMessage.pinInBackground()
-        })
+        }
+//        postMessage.saveInBackground()
     }
 
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
@@ -80,8 +85,8 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
         var bubbleImageView = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
         
-        print( "message sender = \(messages[indexPath.row].senderDisplayName) ")
-        print( "current user = \(PFUser.currentUser()?.username)" )
+        print( "message sender name: \(messages[indexPath.row].senderDisplayName) ")
+        print( "current user username: \(PFUser.currentUser()?.username)" )
         if messages[indexPath.row].senderDisplayName != PFUser.currentUser()?.username {
             bubbleImageView = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
         }
@@ -119,32 +124,86 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     func loadMessages() {
-        let rawMessages = self.chatRoom?.objectForKey("messages") as! [PFObject]
+        print("start loading messages")
+        let rawMessages = chatroom?.objectForKey("messages") as! [PFObject]
         let currentUser: PFUser = PFUser.currentUser()! as PFUser!
-        let otherUser: PFUser = (self.chatRoom?.objectForKey("users") as! [PFUser]).filter({$0.objectId != currentUser.objectId!}).first! as PFUser!
-        print(rawMessages)
+        
+        for user in chatroom?.objectForKey("users") as! [PFUser] {
+            print(user.username)
+        }
+        let otherUser: PFUser = (chatroom?.objectForKey("users") as! [PFUser]).filter({$0.objectId != currentUser.objectId!}).first! as PFUser!
+        
+        print("currentUser = \(currentUser)")
+        print("otherUser = \(otherUser)")
+        print(rawMessages.count)
+        messages.removeAll()
         for message in rawMessages {
             let senderId: String = message.objectForKey("senderId") as! String
             let text: String = message.objectForKey("text") as! String
             var displayName: String = currentUser.username!
+            print("senderId = \(senderId)")
+            print("displayName = \(displayName)")
+            print("if statement = \(senderId != currentUser.objectId)")
+            print("dfoisefoseicnesoncs")
             
-            if senderId != currentUser.objectId {
+            
+            if senderId != currentUser.objectId! {
+                
+                print("otheruser = \(otherUser.username!)")
                 displayName = otherUser.username!
             }
-            self.messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
+            
+            messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
+
+        }
+        self.collectionView?.reloadData()
+        print(messages)
+        
+    }
+    
+    func createOrLoadChatRoom(completionHandler: () -> Void) {
+        let query = PFQuery(className: "Chatroom")
+        
+        query.whereKey("users", containsAllObjectsInArray: users)
+        query.includeKey("messages")
+        query.includeKey("users")
+        
+        query.cachePolicy = .CacheThenNetwork
+        if (query.hasCachedResult()) {
+            print("cached chatroom exists")
+        } else {
+            print("cached chatroom doesn't exist")
+        }
+        
+        print("about to get query")
+        query.getFirstObjectInBackgroundWithBlock {
+            (object: PFObject?, error: NSError?) -> Void in
+            if error != nil || object == nil {
+                
+                print("no chatroom found on server or cache")
+                self.chatroom = PFObject(className: "Chatroom")
+                self.chatroom!["users"] = self.users
+                self.chatroom!["messages"] = self.messages
+
+                self.chatroom?.saveEventually({
+                    (success: Bool?, error: NSError?) in
+                    if(success! && (error == nil)) {
+                        print("new chat room saved")
+                        completionHandler()
+                    } else {
+                        print("error saving new chatroom: \(error)")
+                    }
+                })
+            } else {
+                print("chat room already exists on server or in cache. load it.")
+                self.chatroom = object
+                print("set chatroom object to loaded chatroom")
+                completionHandler()
+            }
         }
     }
     
-    
 }
-
-
-
-
-
-
-
-
 
 
 

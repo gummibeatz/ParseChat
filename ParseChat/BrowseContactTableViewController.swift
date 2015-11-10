@@ -9,23 +9,30 @@
 import UIKit
 import Foundation
 import Parse
-import ReachabilitySwift
 
 class BrowseContactTableViewController: UITableViewController {
     
     var contacts: [PFUser] = []
-    let offlineObjectId = "qxhbCealXf"
-    
 
     override func viewDidLoad() {
-        let username = "myUsername"
-        let password = "myPassword"
+        
         print("view did load")
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject(offlineObjectId, forKey: "userId")
-        if networkIsAvailable() {
-            PFUser.logInWithUsernameInBackground(username, password: password)
+        let currentUser = PFUser.currentUser()
+        if currentUser == nil {
+            print("could not load user from cache")
+            let username = "myUsername"
+            let password = "myPassword"
+            PFUser.logInWithUsernameInBackground(username, password: password, block: {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user == nil || error != nil {
+                    print("login failed")
+                } else {
+                    print("login success!!")
+                }
+            })
+        } else {
+            print("loaded current user from cache")
         }
         self.loadContacts()
     }
@@ -34,18 +41,16 @@ class BrowseContactTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
 
         let indexPath = self.tableView.indexPathForSelectedRow
         vc.contact = contacts[indexPath!.row]
+        print("browse controller passing \(vc.contact)")
     }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("contactCellIdentifier", forIndexPath: indexPath)
@@ -57,23 +62,23 @@ class BrowseContactTableViewController: UITableViewController {
     }
     
     func loadContacts() {
-        print("in load contacts")
         let query = PFUser.query()
         query?.whereKey("isContact", equalTo: true)
-        if !networkIsAvailable() {
-            print("network is not available")
-            query?.fromLocalDatastore()
+        query?.cachePolicy = .CacheThenNetwork
+        if (query?.hasCachedResult() == false) {
+            print("no cached Contacts exist")
+        } else {
+            print("cached Contacts exist")
         }
         query?.findObjectsInBackgroundWithBlock({
-            PFQueryArrayResultBlock in
-            self.contacts = (PFQueryArrayResultBlock.0 as! [PFUser]).filter({$0.objectId != PFUser.currentUser()?.objectId})
-            if(!networkIsAvailable()) {
-                self.contacts = (PFQueryArrayResultBlock.0 as! [PFUser]).filter({$0.objectId != self.offlineObjectId})
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if let error = error {
+                print(error)
+            } else {
+                self.contacts = objects as! [PFUser]
+                print("got contacts from server or cache")
+                self.tableView.reloadData()
             }
-            self.tableView.reloadData()
-            PFObject.pinAllInBackground(self.contacts)
         })
-        
     }
-
 }
