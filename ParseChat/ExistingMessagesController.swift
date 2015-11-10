@@ -59,8 +59,7 @@ class ExistingMessagesController: UITableViewController {
         print("did select row")
         let chatVC: ChatViewController = ChatViewController()
         chatVC.users = (self.chatrooms[indexPath.row] as! PFObject).objectForKey("users") as! [PFUser]
-        self.presentViewController(chatVC, animated: true, completion: nil)
-        self.didMoveToParentViewController(self)
+        self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
 }

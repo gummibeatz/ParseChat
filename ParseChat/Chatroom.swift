@@ -9,12 +9,17 @@
 import Foundation
 import Parse
 
+protocol ChatroomDelegate {
+    func didFinishLoading()
+}
+
 class Chatroom: PFObject, PFSubclassing{
     //pass in an array of users in the chatroom, perform query.  if it exists, load it; if not, create and save it.
     @NSManaged var users: [PFUser]?
     var otherUsers: [PFUser]!
     var messages: [PFObject]!
-
+    var delegate: ChatroomDelegate?
+    
     override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -30,6 +35,7 @@ class Chatroom: PFObject, PFSubclassing{
    
     init(users:[PFUser]) {
         super.init()
+        
         self.users = users
         let query = PFQuery(className: "Chatroom")
         
@@ -48,9 +54,11 @@ class Chatroom: PFObject, PFSubclassing{
                 print("no chatroom found on server or cache")
                 let chatroom = PFObject(className: "Chatroom")
                 self.messages = []
+                self.delegate?.didFinishLoading()
             } else {
                 print("chat room already exists on server or in cache. load it.")
                 self.messages = object!.objectForKey("messages") as! [PFObject]
+                self.delegate?.didFinishLoading()
             }
         }
     }

@@ -27,8 +27,7 @@ class ContactProfileViewController: UIViewController {
         let chatVC: ChatViewController = ChatViewController()
         chatVC.users = [contact!, PFUser.currentUser()!]
         print("in startChattingButtonTapped contact = \(contact)")
-        self.presentViewController(chatVC, animated: true, completion: nil)
-        self.didMoveToParentViewController(self)
+        self.navigationController?.pushViewController(chatVC, animated: true)
     }
 }
 

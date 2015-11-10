@@ -13,7 +13,7 @@ import JSQMessagesViewController
 
 class ChatViewController: JSQMessagesViewController {
     
-    var chatroom: PFObject?
+    var chatroom: Chatroom?
     var users = [PFUser]()
     var messages = [JSQMessage]()
     
@@ -26,8 +26,8 @@ class ChatViewController: JSQMessagesViewController {
         senderId = PFUser.currentUser()?.objectId
         senderDisplayName = PFUser.currentUser()?.username
         
-        var chatroom = Chatroom(users: users)
-        
+        self.chatroom = Chatroom(users: users)
+        self.chatroom?.delegate = self
 //        createOrLoadChatRoom {
 //            () -> Void in
 //            self.loadMessages()
@@ -122,7 +122,7 @@ class ChatViewController: JSQMessagesViewController {
     
     func loadMessages() {
         print("start loading messages")
-        let rawMessages = chatroom?.objectForKey("messages") as! [PFObject]
+        let rawMessages = chatroom?.messages
         let currentUser: PFUser = PFUser.currentUser()! as PFUser!
         
         for user in chatroom?.objectForKey("users") as! [PFUser] {
@@ -132,9 +132,9 @@ class ChatViewController: JSQMessagesViewController {
         
         print("currentUser = \(currentUser)")
         print("otherUser = \(otherUser)")
-        print(rawMessages.count)
+        print(rawMessages!.count)
         messages.removeAll()
-        for message in rawMessages {
+        for message in rawMessages! {
             let senderId: String = message.objectForKey("senderId") as! String
             let text: String = message.objectForKey("text") as! String
             var displayName: String = currentUser.username!
@@ -157,39 +157,13 @@ class ChatViewController: JSQMessagesViewController {
         print(messages)
         
     }
-    
-    func createOrLoadChatRoom(completionHandler: () -> Void) {
-        let query = PFQuery(className: "Chatroom")
-        
-        query.whereKey("users", containsAllObjectsInArray: users)
-        query.includeKey("messages")
-        query.includeKey("users")
-        
-        query.cachePolicy = .CacheThenNetwork
-        if (query.hasCachedResult()) {
-            print("cached chatroom exists")
-        } else {
-            print("cached chatroom doesn't exist")
-        }
-        
-        print("about to get query")
-        query.getFirstObjectInBackgroundWithBlock {
-            (object: PFObject?, error: NSError?) -> Void in
-            if error != nil || object == nil {
-                
-                print("no chatroom found on server or cache")
-                self.chatroom = PFObject(className: "Chatroom")
-                self.chatroom!["users"] = self.users
-                self.chatroom!["messages"] = self.messages
-            } else {
-                print("chat room already exists on server or in cache. load it.")
-                self.chatroom = object
-                print("set chatroom object to loaded chatroom")
-                completionHandler()
-            }
-        }
+}
+
+extension ChatViewController: ChatroomDelegate {
+    func didFinishLoading() {
+        print("didFinish Loading")
+        self.loadMessages()
     }
-    
 }
 
 
