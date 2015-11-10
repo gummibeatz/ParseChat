@@ -26,9 +26,6 @@ class Chatroom: PFObject, PFSubclassing{
         super.init()
         self.users = users
     }
-
-    
-    
     
     static func parseClassName() -> String {
         return "Chatroom"
