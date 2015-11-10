@@ -29,60 +29,6 @@ class ContactProfileViewController: UIViewController {
         print("in startChattingButtonTapped contact = \(contact)")
         self.presentViewController(chatVC, animated: true, completion: nil)
         self.didMoveToParentViewController(self)
-        
-        
-//        createOrLoadChatRoom( {
-//            completionHandler in
-//            print("finished creating or loading chatroom")
-//            
-//            
-//            chatVC.chatRoom = self.chatRoom
-//            self.presentViewController(chatVC, animated: true, completion: nil)
-//            self.didMoveToParentViewController(self)
-//        })
     }
-    
-    func createOrLoadChatRoom(completionHandler: () -> Void) {
-        self.chatRoom = PFObject(className: "Chatroom")
-        let query = PFQuery(className: "Chatroom")
-        let contacts = [PFUser.currentUser()!, contact!]
-        query.includeKey("messages")
-        query.whereKey("users", containsAllObjectsInArray: contacts)
-        
-        query.cachePolicy = .CacheThenNetwork
-        if (query.hasCachedResult()) {
-            print("cached chatroom exists")
-        } else {
-            print("cached chatroom doesn't exist")
-        }
-        
-        print("about to get query")
-        query.getFirstObjectInBackgroundWithBlock {
-            (object: PFObject?, error: NSError?) -> Void in
-            if error != nil || object == nil {
-                print("no chatroom")
-                self.chatRoom!["messages"] = []
-                self.chatRoom!["users"] = contacts
-                self.chatRoom?.saveEventually({
-                    (succeeded: Bool?, error: NSError?) in
-                    print("inside chatroom save in background with block")
-                    print("succeeded = \(succeeded)")
-                    print("error = \(error)")
-                    if(succeeded! && (error == nil)) {
-                        print("chat room saved!!")
-//                        self.chatRoom?.pinInBackground()
-                    }
-                })
-            } else {
-                print("chat room exists already")
-                self.chatRoom! = object!
-//                self.chatRoom?.pinInBackground()
-            }
-            print(self.chatRoom)
-            completionHandler()
-        }
-        
-    }
-    
 }
 

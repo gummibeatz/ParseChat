@@ -21,21 +21,18 @@ class ExistingMessagesController: UITableViewController {
     
     
     override func viewDidLoad() {
-        
-        signIn()
-        let user = PFUser.currentUser()
-        let relation = user?.relationForKey("chatRoom")
-        let query = relation?.query()
+    
+        let query = PFQuery(className: "Chatroom").whereKey("users", equalTo: PFUser.currentUser()!)
+        query.includeKey("users")
         do {
-            let results = try query?.findObjects()
-            print(results)
+            conversations = try query.findObjects()
+            self.tableView.reloadData()
         } catch {
             
         }
         print(conversations)
 
     }
-    
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -50,20 +47,16 @@ class ExistingMessagesController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("userCellIdentifier", forIndexPath: indexPath)
+        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("contactCellIdentifier", forIndexPath: indexPath)
+       
+        print(conversations[indexPath.row].objectForKey("users") as! [PFUser])
         
-        cell.textLabel!.text = "test"
+        cell.textLabel!.text = (conversations[indexPath.row].objectForKey("users") as! [PFUser]).filter({$0 != PFUser.currentUser()!}).first?.username
         return cell
     }
     
-    func signIn() {
-        do {
-            try PFUser.logInWithUsername("myUsername", password: "myPassword")
-        } catch {
-            print (" wioll i hverr ")
-        }
-        print("in sign in")
-        print(PFUser.currentUser())
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("did select row")
     }
-
+    
 }

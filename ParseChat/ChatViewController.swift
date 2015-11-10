@@ -29,9 +29,6 @@ class ChatViewController: JSQMessagesViewController {
         
         createOrLoadChatRoom {
             () -> Void in
-//            print("create")
-//            (self.chatroom?.objectForKey("users") as! [PFUser]).map({print($0)})
-            
             self.loadMessages()
         }
     }

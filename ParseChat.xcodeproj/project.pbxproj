@@ -80,7 +80,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		CC5356A81BE94F2B00FC6D30 /* Main  */ = {
+		CC5356A81BE94F2B00FC6D30 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				CC7B5D0B1BE5831700B63ED4 /* Main.storyboard */,
@@ -88,10 +88,9 @@
 				CCA7E8541BE6AC1E005918F3 /* ExistingMessagesController.swift */,
 				CCDBBC7B1BE58A5A0033D6DC /* BrowseContactTableViewController.swift */,
 				CCDBBC7D1BE5942F0033D6DC /* ContactProfileViewController.swift */,
-				DFCB53E41BEA927100EDD725 /* Chatroom.swift */,
 				CCDBBC7F1BE5991D0033D6DC /* ChatViewController.swift */,
 			);
-			name = "Main ";
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		CC5356A91BE94F3600FC6D30 /* Login */ = {
@@ -126,13 +125,22 @@
 			isa = PBXGroup;
 			children = (
 				CC7B5D071BE5831700B63ED4 /* AppDelegate.swift */,
-				CC5356A81BE94F2B00FC6D30 /* Main  */,
+				CC9B9A2C1BF2646B008D4155 /* Model */,
+				CC5356A81BE94F2B00FC6D30 /* ViewControllers */,
 				CC5356A91BE94F3600FC6D30 /* Login */,
 				CC7B5D0E1BE5831700B63ED4 /* Assets.xcassets */,
 				CC7B5D101BE5831700B63ED4 /* LaunchScreen.storyboard */,
 				CC7B5D131BE5831700B63ED4 /* Info.plist */,
 			);
 			path = ParseChat;
+			sourceTree = "<group>";
+		};
+		CC9B9A2C1BF2646B008D4155 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DFCB53E41BEA927100EDD725 /* Chatroom.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		CCDBBC791BE585E30033D6DC /* Supporting Files */ = {
