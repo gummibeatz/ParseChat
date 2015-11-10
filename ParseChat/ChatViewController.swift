@@ -72,7 +72,6 @@ class ChatViewController: JSQMessagesViewController {
                 print("error: \(error)")
             }
         }
-//        postMessage.saveInBackground()
     }
 
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
@@ -181,16 +180,6 @@ class ChatViewController: JSQMessagesViewController {
                 self.chatroom = PFObject(className: "Chatroom")
                 self.chatroom!["users"] = self.users
                 self.chatroom!["messages"] = self.messages
-
-                self.chatroom?.saveEventually({
-                    (success: Bool?, error: NSError?) in
-                    if(success! && (error == nil)) {
-                        print("new chat room saved")
-                        completionHandler()
-                    } else {
-                        print("error saving new chatroom: \(error)")
-                    }
-                })
             } else {
                 print("chat room already exists on server or in cache. load it.")
                 self.chatroom = object
