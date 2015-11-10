@@ -33,7 +33,7 @@ class ChatViewController: JSQMessagesViewController {
 //            (self.chatroom?.objectForKey("users") as! [PFUser]).map({print($0)})
             
             self.loadMessages()
-        }
+        }git 
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
