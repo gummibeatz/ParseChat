@@ -22,7 +22,6 @@ class ChatViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         print("chat view loaded")
         super.viewDidLoad()
-        users.append(PFUser.currentUser()!)
         print("users = \(users)")
         senderId = PFUser.currentUser()?.objectId
         senderDisplayName = PFUser.currentUser()?.username
@@ -190,7 +189,6 @@ class ChatViewController: JSQMessagesViewController {
     }
     
 }
-
 
 
 // Forr REFERENCE COOL COMPARATORS

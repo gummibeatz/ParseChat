@@ -13,7 +13,7 @@ import Parse
 class ExistingMessagesController: UITableViewController {
     
     var idx: Int?
-    var conversations: [PFObject] = []
+    var chatrooms: [PFObject] = []
     enum QueryErrors: ErrorType {
         case BadCast
     }
@@ -25,12 +25,12 @@ class ExistingMessagesController: UITableViewController {
         let query = PFQuery(className: "Chatroom").whereKey("users", equalTo: PFUser.currentUser()!)
         query.includeKey("users")
         do {
-            conversations = try query.findObjects()
+            chatrooms = try query.findObjects()
             self.tableView.reloadData()
         } catch {
             
         }
-        print(conversations)
+        print(chatrooms)
 
     }
     
@@ -39,7 +39,7 @@ class ExistingMessagesController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversations.count
+        return chatrooms.count
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -49,14 +49,18 @@ class ExistingMessagesController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("contactCellIdentifier", forIndexPath: indexPath)
        
-        print(conversations[indexPath.row].objectForKey("users") as! [PFUser])
+        print(chatrooms[indexPath.row].objectForKey("users") as! [PFUser])
         
-        cell.textLabel!.text = (conversations[indexPath.row].objectForKey("users") as! [PFUser]).filter({$0 != PFUser.currentUser()!}).first?.username
+        cell.textLabel!.text = (chatrooms[indexPath.row].objectForKey("users") as! [PFUser]).filter({$0 != PFUser.currentUser()!}).first?.username
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("did select row")
+        let chatVC: ChatViewController = ChatViewController()
+        chatVC.users = (self.chatrooms[indexPath.row] as! PFObject).objectForKey("users") as! [PFUser]
+        self.presentViewController(chatVC, animated: true, completion: nil)
+        self.didMoveToParentViewController(self)
     }
     
 }
