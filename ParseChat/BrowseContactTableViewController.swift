@@ -29,12 +29,13 @@ class BrowseContactTableViewController: UITableViewController {
                     print("login failed")
                 } else {
                     print("login success!!")
+                   self.loadContacts()
                 }
             })
         } else {
             print("loaded current user from cache")
+           self.loadContacts()
         }
-        self.loadContacts()
     }
     
     
@@ -75,7 +76,8 @@ class BrowseContactTableViewController: UITableViewController {
             if let error = error {
                 print(error)
             } else {
-                self.contacts = objects as! [PFUser]
+                
+                self.contacts = (objects as! [PFUser]).filter({$0.objectId != PFUser.currentUser()!.objectId})
                 print("got contacts from server or cache")
                 self.tableView.reloadData()
             }
