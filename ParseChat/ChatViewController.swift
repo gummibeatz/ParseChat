@@ -26,10 +26,12 @@ class ChatViewController: JSQMessagesViewController {
         senderId = PFUser.currentUser()?.objectId
         senderDisplayName = PFUser.currentUser()?.username
         
-        createOrLoadChatRoom {
-            () -> Void in
-            self.loadMessages()
-        }
+        var chatroom = Chatroom(users: users)
+        
+//        createOrLoadChatRoom {
+//            () -> Void in
+//            self.loadMessages()
+//        }
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
