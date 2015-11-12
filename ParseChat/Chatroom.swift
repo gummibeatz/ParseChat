@@ -40,6 +40,8 @@ class Chatroom: PFObject, PFSubclassing{
         super.init()
         
         self.users = users
+        self.setObject(users, forKey: "users")
+        
         let query = PFQuery(className: "Chatroom")
         
         query.whereKey("users", containsAllObjectsInArray: users)
