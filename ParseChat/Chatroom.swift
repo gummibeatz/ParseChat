@@ -15,10 +15,13 @@ protocol ChatroomDelegate {
 
 class Chatroom: PFObject, PFSubclassing{
     //pass in an array of users in the chatroom, perform query.  if it exists, load it; if not, create and save it.
-    @NSManaged var users: [PFUser]?
-    var otherUsers: [PFUser]!
+    var users: [PFUser]?
     var messages: [PFObject]!
     var delegate: ChatroomDelegate?
+    
+    lazy var otherUsers: [PFUser] = {
+        return self.users!.filter({$0 != PFUser.currentUser()!})
+    }()
     
     override class func initialize() {
         struct Static {
@@ -52,7 +55,6 @@ class Chatroom: PFObject, PFSubclassing{
             (object: PFObject?, error: NSError?) -> Void in
             if error != nil || object == nil {
                 print("no chatroom found on server or cache")
-                let chatroom = PFObject(className: "Chatroom")
                 self.messages = []
                 self.delegate?.didFinishLoading()
             } else {

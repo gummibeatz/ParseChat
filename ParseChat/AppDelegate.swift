@@ -18,6 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Parse.setApplicationId("9aiaJiikwXCOuoRRhfRdACUoOlNcQ0dnamhfVWQF", clientKey: "VTacVraXyM3diBKxb3lMmyPNZvfBm3JF9TpakMVU")
         
+        //MARK: Enabling push notification for Parse
+        
+        
+        // fix below line
+        // let userNotificationTypes: UIUserNotificationType = ( .Alert | .Badge | .Sound)
+        
         return true
     }
 

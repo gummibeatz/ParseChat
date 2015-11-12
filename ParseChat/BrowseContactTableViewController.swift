@@ -42,9 +42,11 @@ class BrowseContactTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc: ContactProfileViewController = segue.destinationViewController as! ContactProfileViewController
 
@@ -52,10 +54,10 @@ class BrowseContactTableViewController: UITableViewController {
         vc.contact = contacts[indexPath!.row]
         print("browse controller passing \(vc.contact)")
     }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("contactCellIdentifier", forIndexPath: indexPath)
-        
         let contact: PFUser = contacts[indexPath.row]
         
         cell.textLabel!.text = contact["username"] as? String

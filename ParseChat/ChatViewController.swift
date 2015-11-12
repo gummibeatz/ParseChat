@@ -28,10 +28,6 @@ class ChatViewController: JSQMessagesViewController {
         
         self.chatroom = Chatroom(users: users)
         self.chatroom?.delegate = self
-//        createOrLoadChatRoom {
-//            () -> Void in
-//            self.loadMessages()
-//        }
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
@@ -124,38 +120,28 @@ class ChatViewController: JSQMessagesViewController {
         print("start loading messages")
         let rawMessages = chatroom?.messages
         let currentUser: PFUser = PFUser.currentUser()! as PFUser!
+        let otherUser: PFUser = (chatroom?.otherUsers.first)!
         
-        for user in chatroom?.objectForKey("users") as! [PFUser] {
-            print(user.username)
-        }
-        let otherUser: PFUser = (chatroom?.objectForKey("users") as! [PFUser]).filter({$0.objectId != currentUser.objectId!}).first! as PFUser!
-        
-        print("currentUser = \(currentUser)")
-        print("otherUser = \(otherUser)")
-        print(rawMessages!.count)
+//        print("currentUser = \(currentUser)")
+//        print("otherUser = \(otherUser)")
+//        print(rawMessages!.count)
         messages.removeAll()
         for message in rawMessages! {
             let senderId: String = message.objectForKey("senderId") as! String
             let text: String = message.objectForKey("text") as! String
             var displayName: String = currentUser.username!
-            print("senderId = \(senderId)")
-            print("displayName = \(displayName)")
-            print("if statement = \(senderId != currentUser.objectId)")
-            print("dfoisefoseicnesoncs")
-            
-            
+//            print("senderId = \(senderId)")
+//            print("displayName = \(displayName)")
+//            print("if statement = \(senderId != currentUser.objectId)")
+//            print("dfoisefoseicnesoncs")
             if senderId != currentUser.objectId! {
-                
                 print("otheruser = \(otherUser.username!)")
                 displayName = otherUser.username!
             }
-            
             messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
 
         }
         self.collectionView?.reloadData()
-        print(messages)
-        
     }
 }
 

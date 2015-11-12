@@ -58,7 +58,7 @@ class ExistingMessagesController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("did select row")
         let chatVC: ChatViewController = ChatViewController()
-        chatVC.users = (self.chatrooms[indexPath.row] as! PFObject).objectForKey("users") as! [PFUser]
+        chatVC.users = self.chatrooms[indexPath.row].objectForKey("users") as! [PFUser]
         self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
