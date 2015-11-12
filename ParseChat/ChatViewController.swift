@@ -25,9 +25,21 @@ class ChatViewController: JSQMessagesViewController {
         print("users = \(users)")
         senderId = PFUser.currentUser()?.objectId
         senderDisplayName = PFUser.currentUser()?.username
-        
-        self.chatroom = Chatroom(users: users)
-        self.chatroom?.delegate = self
+       
+        let query = Chatroom.query()
+        query?.whereKey("users", containsAllObjectsInArray: users)
+        query?.getFirstObjectInBackgroundWithBlock({ (chatroom, error) -> Void in
+            if chatroom == nil || error != nil {
+                print("couldn't get chatroom")
+                let messages: [PFObject] = [PFObject]()
+                self.chatroom = Chatroom(users: self.users, messages: messages)
+                self.loadMessages()
+            } else {
+                print("got chatroom")
+                self.chatroom = chatroom as? Chatroom
+                self.loadMessages()
+            }
+        })
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
@@ -54,7 +66,8 @@ class ChatViewController: JSQMessagesViewController {
         postMessage["text"] = text
         postMessage["senderId"] = PFUser.currentUser()!.objectId
         
-        chatroom?.addObject(postMessage, forKey: "messages")
+        chatroom?.messages.append(postMessage)
+        
         print("added message to chatroom")
         print("chatroom about to be saved: \(chatroom)")
         
@@ -156,14 +169,6 @@ class ChatViewController: JSQMessagesViewController {
         self.collectionView?.reloadData()
     }
 }
-
-extension ChatViewController: ChatroomDelegate {
-    func didFinishLoading() {
-        print("didFinish Loading")
-        self.loadMessages()
-    }
-}
-
 
 // Forr REFERENCE COOL COMPARATORS
 public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
