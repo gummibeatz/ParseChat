@@ -22,6 +22,7 @@ class ChatViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         print("chat view loaded")
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadView" , name: "reloadChatViewController", object: nil)
         print("users = \(users)")
         senderId = PFUser.currentUser()?.objectId
         senderDisplayName = PFUser.currentUser()?.username
@@ -166,6 +167,10 @@ class ChatViewController: JSQMessagesViewController {
             messages.append(JSQMessage(senderId: senderId, displayName: displayName, text: text))
 
         }
+        self.collectionView?.reloadData()
+    }
+    
+    func reloadView() {
         self.collectionView?.reloadData()
     }
 }

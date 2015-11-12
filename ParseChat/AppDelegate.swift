@@ -37,7 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print(userInfo)
-        PFPush.handlePush(userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName("reloadChatViewController", object: nil)
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

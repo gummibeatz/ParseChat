@@ -19,8 +19,6 @@ class Chatroom: PFObject, PFSubclassing{
     lazy var otherUsers: [PFUser] = {
         return self.users.filter({$0 != PFUser.currentUser()!})
     }()
-   
-
     
     override class func initialize() {
         struct Static {
@@ -35,8 +33,8 @@ class Chatroom: PFObject, PFSubclassing{
         super.init()
     }
    
-    init(users:[PFUser], messages: [PFObject]) {
-        super.init()
+    convenience init(users:[PFUser], messages: [PFObject]) {
+        self.init()
         self.users = users
         self.messages = messages
     }
