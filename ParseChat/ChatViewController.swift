@@ -104,8 +104,6 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
         var bubbleImageView = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
         
-        print( "message sender name: \(messages[indexPath.row].senderDisplayName) ")
-        print( "current user username: \(PFUser.currentUser()?.username)" )
         if messages[indexPath.row].senderDisplayName != PFUser.currentUser()?.username {
             bubbleImageView = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
         }
@@ -171,7 +169,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     func reloadView() {
-        self.collectionView?.reloadData()
+        self.loadMessages()
     }
 }
 
