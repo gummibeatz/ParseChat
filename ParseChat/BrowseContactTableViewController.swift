@@ -21,15 +21,17 @@ class BrowseContactTableViewController: UITableViewController {
         let currentUser = PFUser.currentUser()
         if currentUser == nil {
             print("could not load user from cache")
-            let username = "myUsername"
-            let password = "myPassword"
+            let username = "myUsername3"
+            let password = "myPassword3"
             PFUser.logInWithUsernameInBackground(username, password: password, block: {
                 (user: PFUser?, error: NSError?) -> Void in
                 if user == nil || error != nil {
                     print("login failed")
                 } else {
                     print("login success!!")
-                   self.loadContacts()
+                    PFInstallation.currentInstallation().setObject(PFUser.currentUser()!, forKey: "user")
+                    PFInstallation.currentInstallation().saveInBackground()
+                    self.loadContacts()
                 }
             })
         } else {
