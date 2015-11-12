@@ -54,10 +54,22 @@ class ChatViewController: JSQMessagesViewController {
         postMessage["text"] = text
         postMessage["senderId"] = PFUser.currentUser()!.objectId
         
-        
         chatroom?.addObject(postMessage, forKey: "messages")
         print("added message to chatroom")
         print("chatroom about to be saved: \(chatroom)")
+        
+        let params = [
+            "recipientId" : chatroom?.otherUsers.first?.objectId,
+            "message" : postMessage["text"]
+        ]
+        
+        PFCloud.callFunctionInBackground("sendPushToUser", withParameters: params) { (success:AnyObject?, error:NSError?) -> Void in
+            if (error != nil){
+                print("Cloud Code push error: \(error)")
+            } else {
+                print("Cloud Code push success: \(success)")
+            }
+        }
 
         chatroom!.saveInBackgroundWithBlock {
             (success: Bool?, error: NSError?) -> Void in
