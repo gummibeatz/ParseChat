@@ -157,7 +157,6 @@ class ChatViewController: JSQMessagesViewController {
 //            print("senderId = \(senderId)")
 //            print("displayName = \(displayName)")
 //            print("if statement = \(senderId != currentUser.objectId)")
-//            print("dfoisefoseicnesoncs")
             if senderId != currentUser.objectId! {
                 print("otheruser = \(otherUser.username!)")
                 displayName = otherUser.username!
@@ -169,8 +168,16 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     func reloadView() {
-        self.loadMessages()
+        let query = Chatroom.query()
+        query?.whereKey("users", containsAllObjectsInArray: users)
+        query?.cachePolicy = .NetworkOnly
+        query?.getFirstObjectInBackgroundWithBlock({ (chatroom, error) -> Void in
+            self.chatroom = chatroom as? Chatroom
+            self.messages.append(JSQMessage(senderId: PFUser.currentUser()!.objectId, displayName: PFUser.currentUser()!.username, text: self.chatroom?.messages.last?.objectForKey("text") as! String ) )
+        })
+        self.collectionView?.reloadData()
     }
+    
 }
 
 // Forr REFERENCE COOL COMPARATORS
